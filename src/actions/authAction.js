@@ -1,15 +1,47 @@
-export function loginFinished(error, result) {
-  if (error) {
-    alert('Error logging in.');
-  } else {
-    if (result.isCancelled) {
-      alert('Login cancelled.');
-    } else {
-      alert('Logged in');
-    }
+import {
+   FBSDKAccessToken,
+   FBSDKGraphRequest
+} from 'react-native-fbsdkcore';
+
+
+export function getAccessToken() {
+
+  return (dispatch) => {
+
+    FBSDKAccessToken.getCurrentAccessToken((response) => {
+      dispatch(saveAccessToken(response.tokenString));
+    })
   }
 }
 
-export function logoutFinished() {
-  alert('you logged out');
+export function getUserProfile() {
+  
+  return (dispatch) => {
+    
+    const fetchUserRequest = new FBSDKGraphRequest((error, response) => {
+      if (error) {
+        console.log('Error making request.');
+      } else {
+        // Data from request is in result
+        dispatch(saveUserProfile(response))
+      }
+    }, '/me?fields=id,name,picture');
+
+    // Start the graph request.
+    fetchUserRequest.start();
+  }
+}
+
+function saveAccessToken(token) {
+  return {
+    type: 'SAVE_ACCESS_TOKEN',
+    token
+  }
+}
+
+function saveUserProfile(user) {
+  return {
+    type: 'SAVE_USER_PROFILE',
+    user
+  }
 }

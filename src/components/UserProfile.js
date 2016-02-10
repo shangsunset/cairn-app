@@ -11,7 +11,7 @@ export default class UserProfile extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ marginTop: 70 }}>
         <Text>profile</Text>
       </View>
     );

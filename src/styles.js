@@ -1,5 +1,16 @@
 module.exports = {
 
+  navBar: {
+    backgroundColor: '#F6F6F6',
+  },
+  navBarLeftButton: {
+    paddingLeft: 10,
+    paddingTop: 10
+  },
+  navBarRightButton: {
+    paddingRight: 10,
+    paddingTop: 10
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

@@ -1,10 +1,49 @@
 import React, {
   Navigator,
   Component,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 
-import Login from './components/Login';
+const styles = StyleSheet.create(require('./styles.js'));
+
+import LoginContainer from './containers/LoginContainer';
 import UserProfile from './components/UserProfile';
+
+
+let NavigationBarRouteMapper = {
+
+  LeftButton(route, navigator, index, navState) {
+    if (index === 0) {
+      return null
+    }
+
+    let previousRoute = navState.routeStack[index - 1]
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.pop()}
+        style={styles.navBarLeftButton}>
+
+        <Text>
+          Back
+        </Text>
+      </TouchableOpacity>
+    )
+  },
+
+  RightButton(route, navigator, index, navState) {
+    return null;
+  },
+
+  Title(route, navigator, index, navState) {
+    return (
+      <Text></Text>
+    )
+  }
+
+}
 
 export default class App extends Component {
   constructor() {
@@ -15,11 +54,11 @@ export default class App extends Component {
   renderScene(route, navigator) {
     switch (route.id) {
       case 'login':
-        return <Login navigator={navigator} />;
+        return <LoginContainer navigator={navigator} />;
       case 'user_profile':
         return <UserProfile navigator={navigator} />;
       default:
-        return <Login navigator={navigator} />;
+        return <UserProfile navigator={navigator} />;
 
     }
   }
@@ -28,6 +67,12 @@ export default class App extends Component {
       <Navigator
         initialRoute={{ id: 'login' }}
         renderScene={this.renderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            style={styles.navBar}
+            routeMapper={NavigationBarRouteMapper}
+          />
+        }
         configureScene={(route) => {
           if (route.sceneConfig) {
             return route.sceneConfig;

@@ -4,14 +4,14 @@ import { Provider } from 'react-redux';
 
 import App from './src/app';
 
-/* import configureStore from './store/configure-store'; */
+import configureStore from './src/store/configureStore';
 
 
-/* const store = configureStore(); */
+const store = configureStore();
 
 
 const Root = () => (
-  <Provider>
+  <Provider store={store}>
     <App />
   </Provider>
 );

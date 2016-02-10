@@ -36,6 +36,10 @@ buck-out
 local.properties
 *.iml
 
+# iOS
+ios/Pods
+ios/build
+
 # Node
 node_modules
 *.log

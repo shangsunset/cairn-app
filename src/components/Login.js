@@ -13,8 +13,6 @@ import {
 } from 'react-native-fbsdkcore';
 
 
-import * as AuthActions from '../actions/authAction';
-
 const styles = StyleSheet.create(require('../styles.js'));
 
 class Login extends Component {
@@ -25,6 +23,7 @@ class Login extends Component {
 
   render() {
 
+    console.log(this.props);
     return (
 
       <View style={styles.container}>
@@ -42,9 +41,9 @@ class Login extends Component {
                 alert('Login cancelled.');
               } else {
 
-                this.props.navigator.push({ id: 'user_profile' });
-                this.props.dispatch(AuthActions.getAccessToken());
-                this.props.dispatch(AuthActions.getUserProfile());
+                this.props.actions.getAccessToken();
+                this.props.actions.getUserProfile();
+                this.props.navigator.push({ id: 'userProfile' });
               }
             }
           }}

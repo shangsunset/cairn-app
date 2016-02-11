@@ -1,4 +1,9 @@
-function auth(state={ accessToken: '', user: null }, action) {
+export default function user(state={
+  accessToken: '',
+  id: '',
+  name: '',
+  picture: null
+  }, action) {
 
     switch(action.type) {
       case 'SAVE_ACCESS_TOKEN':
@@ -10,7 +15,9 @@ function auth(state={ accessToken: '', user: null }, action) {
       case 'SAVE_USER_PROFILE':
         return {
           ...state,
-          user: action.user
+          id: action.user.id,
+          name: action.user.name,
+          picture: action.user.picture
         };
 
       default:
@@ -18,5 +25,3 @@ function auth(state={ accessToken: '', user: null }, action) {
     }
 
 }
-
-export default auth;

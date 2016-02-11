@@ -9,7 +9,6 @@ import configureStore from './src/store/configureStore';
 
 const store = configureStore();
 
-
 const Root = () => (
   <Provider store={store}>
     <App />

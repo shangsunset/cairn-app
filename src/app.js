@@ -10,7 +10,7 @@ import React, {
 const styles = StyleSheet.create(require('./styles.js'));
 
 import LoginContainer from './containers/LoginContainer';
-import UserProfile from './components/UserProfile';
+import UserProfileContainer from './containers/UserProfileContainer';
 
 
 let NavigationBarRouteMapper = {
@@ -55,10 +55,10 @@ export default class App extends Component {
     switch (route.id) {
       case 'login':
         return <LoginContainer navigator={navigator} />;
-      case 'user_profile':
-        return <UserProfile navigator={navigator} />;
+      case 'userProfile':
+        return <UserProfileContainer navigator={navigator} />;
       default:
-        return <UserProfile navigator={navigator} />;
+        return <UserProfileContainer navigator={navigator} />;
 
     }
   }

@@ -1,11 +1,8 @@
-import React, {
-  Component,
-  Text,
-  View,
-} from 'react-native';
-
+import React, { Component } from 'react-native'; 
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
+import * as AuthActions from '../actions/authAction';
 import Login from '../components/Login';
 
 class LoginContainer extends Component {
@@ -14,35 +11,31 @@ class LoginContainer extends Component {
     super(props);
   }
 
-  render() {
+  componentDidMount() {
     if (this.props.accessToken) {
-      this.navigator.push({ id: 'user_profile' });
-    } else {
-
-      return (
-
-        <Login
-          user={this.props.user}
-          accessToken={this.props.accessToken}
-          navigator={this.props.navigator}
-          dispatch={this.props.dispatch}
-        />
-      );
+      console.log('login container');
+      this.props.navigator.push({ id: 'userProfile' });
     }
+  }
+
+  render() {
+    return (
+
+      <Login {...this.props} />
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    accessToken: state.accessToken
-  } 
+    user: state.user
+  }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators({ SubscriptionActions }, dispatch)
-//   }
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch)
+  }
+}
 
-export default connect(mapStateToProps)(LoginContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

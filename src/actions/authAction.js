@@ -8,7 +8,7 @@ export function getAccessToken() {
 
   return (dispatch) => {
 
-    FBSDKAccessToken.getCurrentAccessToken((response) => {
+    return FBSDKAccessToken.getCurrentAccessToken((response) => {
       dispatch(saveAccessToken(response.tokenString));
     })
   }
@@ -28,7 +28,7 @@ export function getUserProfile() {
     }, '/me?fields=id,name,picture');
 
     // Start the graph request.
-    fetchUserRequest.start();
+    return fetchUserRequest.start();
   }
 }
 

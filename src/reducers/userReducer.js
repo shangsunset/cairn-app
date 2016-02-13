@@ -2,7 +2,7 @@ export default function user(state={
   accessToken: '',
   id: '',
   name: '',
-  picture: null
+  picture: ''
   }, action) {
 
     switch(action.type) {
@@ -17,7 +17,7 @@ export default function user(state={
           ...state,
           id: action.user.id,
           name: action.user.name,
-          picture: action.user.picture
+          picture: action.user.picture.data.url
         };
 
       default:

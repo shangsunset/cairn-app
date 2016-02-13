@@ -2,6 +2,7 @@ import React, {
   Component,
   View,
   Text,
+  Image
 } from 'react-native';
 
 export default class UserProfile extends Component {
@@ -18,9 +19,14 @@ export default class UserProfile extends Component {
       );
     } else {
       const { user } = this.props
+      console.log(user.picture);
       return (
         <View style={{ marginTop: 70 }}>
           <Text>{ user.name }</Text>
+          <Image
+            style={{width: 50, height: 50}}
+            source={{ uri: user.picture }}
+          />
         </View>
       )
     }

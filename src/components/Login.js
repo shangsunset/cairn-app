@@ -13,6 +13,7 @@ import {
 } from 'react-native-fbsdkcore';
 
 
+import Loader from '../components/Loader';
 const styles = StyleSheet.create(require('../styles.js'));
 
 class Login extends Component {
@@ -21,40 +22,49 @@ class Login extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    // if (this.props.user.accessToken) {
+    //   this.props.navigator.push({ id: 'userProfile', title: 'My Profile' });
+    // }
+  }
+
   render() {
 
-    console.log(this.props);
-    return (
+    // if (!this.props.user.accessToken) {
+    //   return <Loader />;
+    // } else {
+    //   
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            Welcome to React Native!
+          </Text>
+          <FBSDKLoginButton
+            style={styles.loginButton}
+            onLoginFinished={(error, result) => {
 
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <FBSDKLoginButton
-          style={styles.loginButton}
-          onLoginFinished={(error, result) => {
-
-            if (error) {
-              alert('Error logging in.');
-            } else {
-              if (result.isCancelled) {
-                alert('Login cancelled.');
+              if (error) {
+                alert('Error logging in.');
               } else {
+                if (result.isCancelled) {
+                  alert('Login cancelled.');
+                } else {
 
-                this.props.actions.getAccessToken();
-                this.props.actions.getUserProfile();
-                this.props.navigator.push({ id: 'userProfile' });
+                  this.props.actions.requestAccessToken();
+                  this.props.actions.requestUserProfile();
+                  this.props.navigator.push({ id: 'userProfile', title: 'My Profile'});
+                }
               }
-            }
-          }}
-          onLogoutFinished={() => {
-            alert('you logged out');
-          }}
-          readPermissions={['public_profile']}
-          publishPermissions={[]}
-        />
-      </View>
-    );
+            }}
+            onLogoutFinished={() => {
+              alert('you logged out');
+            }}
+            readPermissions={['public_profile']}
+            publishPermissions={[]}
+          />
+        </View>
+      );
+    // }
   }
 }
 

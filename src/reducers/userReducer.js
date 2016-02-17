@@ -1,6 +1,6 @@
 export default function user(state={
-  accessToken: '',
-  id: '',
+  accessToken: null,
+  id: null,
   name: '',
   picture: ''
   }, action) {

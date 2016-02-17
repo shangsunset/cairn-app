@@ -6,24 +6,12 @@ import UserProfile from '../components/UserProfile';
 
 class UserProfileContainer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
 
-    const { user } = this.props;
-    if (user) {
-
-      return (
-
-        <UserProfile {...this.props} />
-      );
-    } else {
-      return (
-        <UserProfile />
-      )
-    }
+    return (
+      <UserProfile {...this.props} />
+    );
+    
   }
 }
 

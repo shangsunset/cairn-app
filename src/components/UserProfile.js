@@ -10,7 +10,8 @@ export default class UserProfile extends Component {
     super(props);
   }
   render() {
-    if (!this.props.user) {
+    const { user } = this.props
+    if (!user) {
 
       return (
         <View style={{ marginTop: 70 }}>
@@ -18,15 +19,13 @@ export default class UserProfile extends Component {
         </View>
       );
     } else {
-      const { user } = this.props
-      console.log(user.picture);
       return (
         <View style={{ marginTop: 70 }}>
-          <Text>{ user.name }</Text>
           <Image
-            style={{width: 50, height: 50}}
+            style={{width: 200, height: 200}}
             source={{ uri: user.picture }}
           />
+          <Text>{ user.name }</Text>
         </View>
       )
     }

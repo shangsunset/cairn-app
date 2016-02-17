@@ -1,5 +1,12 @@
 module.exports = {
 
+  loader: {
+
+    flex: 1,
+    paddingTop: 80,
+    alignItems: 'center',
+  },
+
   navBar: {
     backgroundColor: '#F6F6F6',
   },

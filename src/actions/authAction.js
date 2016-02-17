@@ -4,17 +4,17 @@ import {
 } from 'react-native-fbsdkcore';
 
 
-export function getAccessToken() {
+export function requestAccessToken() {
 
   return (dispatch) => {
 
     return FBSDKAccessToken.getCurrentAccessToken((response) => {
-      dispatch(saveAccessToken(response.tokenString));
+      dispatch(saveAccessTokenToStore(response.tokenString));
     })
   }
 }
 
-export function getUserProfile() {
+export function requestUserProfile() {
   
   return (dispatch) => {
     
@@ -23,9 +23,9 @@ export function getUserProfile() {
         console.log('Error making request.');
       } else {
         // Data from request is in result
-        dispatch(saveUserProfile(response))
+        dispatch(saveUserProfileToStore(response))
       }
-    }, '/me?fields=id,name,picture');
+    }, '/me?fields=id,name,picture.width(200)');
 
     // Start the graph request.
     return fetchUserRequest.start();
@@ -39,7 +39,7 @@ function saveAccessToken(token) {
   }
 }
 
-function saveUserProfile(user) {
+function saveUserProfileToStore(user) {
   return {
     type: 'SAVE_USER_PROFILE',
     user

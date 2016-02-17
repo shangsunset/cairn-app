@@ -16,11 +16,11 @@ import UserProfileContainer from './containers/UserProfileContainer';
 let NavigationBarRouteMapper = {
 
   LeftButton(route, navigator, index, navState) {
-    if (index === 0) {
-      return null
+    if (index === 0 || route.id === 'login') {
+      return null;
     }
 
-    let previousRoute = navState.routeStack[index - 1]
+    let previousRoute = navState.routeStack[index - 1];
     return (
       <TouchableOpacity
         onPress={() => navigator.pop()}
@@ -30,7 +30,7 @@ let NavigationBarRouteMapper = {
           Back
         </Text>
       </TouchableOpacity>
-    )
+    );
   },
 
   RightButton(route, navigator, index, navState) {
@@ -39,11 +39,12 @@ let NavigationBarRouteMapper = {
 
   Title(route, navigator, index, navState) {
     return (
-      <Text></Text>
-    )
+      <Text>{ route.title }</Text>
+    );
   }
 
 }
+
 
 export default class App extends Component {
   constructor() {
@@ -63,6 +64,7 @@ export default class App extends Component {
     }
   }
   render() {
+
     return (
       <Navigator
         initialRoute={{ id: 'login' }}

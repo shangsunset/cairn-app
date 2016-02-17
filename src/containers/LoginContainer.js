@@ -7,17 +7,6 @@ import Login from '../components/Login';
 
 class LoginContainer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    if (this.props.accessToken) {
-      console.log('login container');
-      this.props.navigator.push({ id: 'userProfile' });
-    }
-  }
-
   render() {
     return (
 

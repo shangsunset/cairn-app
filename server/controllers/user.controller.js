@@ -1,7 +1,4 @@
 import User from '../models/User';
-import { Types } from 'mongoose'
-
-const ObjectId = Types.ObjectId;
 
 export function all(req, res) {
 
@@ -15,11 +12,11 @@ export function all(req, res) {
 
 export function create(req, res) {
 
+  console.log(req.body.name);
   const user = new User(req.body);
 
   user.save((err, user) => {
     if (err) {
-      console.log(err);
       return res.status(500).send(err);
     }
     return res.json({ user });

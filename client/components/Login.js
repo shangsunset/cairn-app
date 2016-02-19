@@ -22,49 +22,39 @@ class Login extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    // if (this.props.user.accessToken) {
-    //   this.props.navigator.push({ id: 'userProfile', title: 'My Profile' });
-    // }
-  }
-
   render() {
 
-    // if (!this.props.user.accessToken) {
-    //   return <Loader />;
-    // } else {
-    //   
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-          <FBSDKLoginButton
-            style={styles.loginButton}
-            onLoginFinished={(error, result) => {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <FBSDKLoginButton
+          style={styles.loginButton}
+          onLoginFinished={(error, result) => {
 
-              if (error) {
-                alert('Error logging in.');
+            if (error) {
+              alert('Error logging in.');
+            } else {
+              if (result.isCancelled) {
+                alert('Login cancelled.');
               } else {
-                if (result.isCancelled) {
-                  alert('Login cancelled.');
-                } else {
 
-                  this.props.actions.requestAccessToken();
-                  this.props.actions.requestUserProfile();
-                  this.props.navigator.push({ id: 'userProfile', title: 'My Profile'});
-                }
+                // this.props.actions.requestAccessToken();
+                // this.props.actions.requestUserProfile();
+                this.props.actions.saveUser();
+                this.props.navigator.push({ id: 'userProfile', title: 'My Profile'});
               }
-            }}
-            onLogoutFinished={() => {
-              alert('you logged out');
-            }}
-            readPermissions={['public_profile']}
-            publishPermissions={[]}
-          />
-        </View>
-      );
-    // }
+            }
+          }}
+          onLogoutFinished={() => {
+            alert('you logged out');
+          }}
+          readPermissions={['public_profile']}
+          publishPermissions={[]}
+        />
+      </View>
+    );
   }
 }
 

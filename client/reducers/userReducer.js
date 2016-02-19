@@ -6,20 +6,14 @@ export default function user(state={
   }, action) {
 
     switch(action.type) {
-      case 'SAVE_ACCESS_TOKEN':
-        return {
-          ...state,
-          accessToken: action.token
-        };
-
-      case 'SAVE_USER_PROFILE':
+      case 'SAVE_USER':
         return {
           ...state,
           id: action.user.id,
+          accessToken: action.user.accessToken,
           name: action.user.name,
-          picture: action.user.picture.data.url
+          picture: action.user.picture
         };
-
       default:
         return state;
     }

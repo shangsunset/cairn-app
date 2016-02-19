@@ -18,7 +18,7 @@ describe('testing server routes', () => {
 
 describe('testing HTTP requests', () => {
 
-  it('returns request body', (done) => {
+  it('returns 200 for /api/users POST', (done) => {
     request(server)
       .post('/api/users')
       .send({
@@ -33,5 +33,18 @@ describe('testing HTTP requests', () => {
           done();
         }
       });
+  });
+
+  it('returns all users', done => {
+    request(server)
+      .get('/api/users')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      })
   });
 })

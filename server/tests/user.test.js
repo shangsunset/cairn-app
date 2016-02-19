@@ -1,16 +1,16 @@
 import request from 'supertest';
-import app from '../app';
-// request.agent(app.listen())
+import server from '../server';
 
-describe('testing app routes', () => {
+describe('testing server routes', () => {
+
   it('responds to /api/users', (done) => {
-    request(app)
+    request(server)
       .get('/api/users')
       .expect(200, done);
   });
 
   it('404 everything else', (done) => {
-    request(app)
+    request(server)
       .get('/foo/bar')
       .expect(404, done);
   });
@@ -19,14 +19,13 @@ describe('testing app routes', () => {
 describe('testing HTTP requests', () => {
 
   it('returns request body', (done) => {
-    request(app)
+    request(server)
       .post('/api/users')
       .send({
-        id: 2342234,
         name: 'alvin',
-        picure: 'sadfsaldfkj'
+        picture: 'sadfsaldfkj'
       })
-      .expect(200, 'alvin')
+      .expect(200)
       .end((err, res) => {
         if (err) {
           done(err);
@@ -34,5 +33,5 @@ describe('testing HTTP requests', () => {
           done();
         }
       });
-  })
+  });
 })

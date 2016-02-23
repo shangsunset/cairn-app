@@ -12,13 +12,18 @@ export function all(req, res) {
 
 export function create(req, res) {
 
-  console.log(req.body.name);
   const user = new User(req.body);
+
+  user.dudify(function(err, name) {
+    if (err) throw err;
+    console.log('Your new name is ' + name);
+  });
 
   user.save((err, user) => {
     if (err) {
       return res.status(500).send(err);
     }
+    console.log(user);
     return res.json({ user });
   });
 }

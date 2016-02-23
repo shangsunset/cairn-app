@@ -51,8 +51,12 @@ function postUserToServer(user) {
     })
   })
   .then(res => res.json())
-  .then(json => console.log(json))
+  .then(json => {
+    console.log('here is result');
+    console.log(json);
+  })
   .catch(error => {
+    console.log('here is an error');
     console.log(error);
   });
 }

@@ -14,5 +14,19 @@ const userSchema = new Schema({
   picture: String
 });
 
+
+userSchema.methods.dudify = function() {
+  // add some stuff to the users name
+  this.name = this.name + '-dude'; 
+
+  return this.name;
+};
+
+userSchema.pre('save', next => {
+  console.log('pre saving');
+
+  next();
+});
+
 const User = mongoose.model('User', userSchema);
 export default User;

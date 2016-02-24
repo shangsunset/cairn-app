@@ -5,7 +5,7 @@ const ObjectId = Schema.ObjectId;
 const userSchema = new Schema({
   fbID: {
     type: String,
-    unique: true
+    unique: true,
   },
   name: {
     type: String,
@@ -15,18 +15,18 @@ const userSchema = new Schema({
 });
 
 
-userSchema.methods.dudify = function() {
-  // add some stuff to the users name
-  this.name = this.name + '-dude'; 
-
-  return this.name;
-};
-
-userSchema.pre('save', next => {
-  console.log('pre saving');
-
-  next();
-});
-
 const User = mongoose.model('User', userSchema);
+
+
+userSchema.path('fbID').validate((value, done) => {
+  User.findOne( {fbID: value}, (err, doc) => {
+    if (err || !doc) {
+      done(err);
+    } else {
+
+      done(!doc);
+    }
+  });
+}, 'user already exists');
+
 export default User;

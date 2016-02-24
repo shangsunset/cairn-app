@@ -40,9 +40,7 @@ class Login extends Component {
                 alert('Login cancelled.');
               } else {
 
-                // this.props.actions.requestAccessToken();
-                // this.props.actions.requestUserProfile();
-                this.props.actions.saveUser();
+                this.props.actions.saveUserIfNeeded();
                 this.props.navigator.push({ id: 'userProfile', title: 'My Profile'});
               }
             }

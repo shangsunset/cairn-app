@@ -12,12 +12,12 @@ export function all(req, res) {
 
 export function create(req, res) {
 
-  const user = new User(req.body);
+  req.session.accessToken = req.accessToken;
 
-  user.dudify(function(err, name) {
-    if (err) throw err;
-    console.log('Your new name is ' + name);
-  });
+  const user = new User();
+  user.name = req.name;
+  user.fbID = req.fbID;
+  user.picture = req.picture;
 
   user.save((err, user) => {
     if (err) {
@@ -37,4 +37,12 @@ export function read(req, res) {
 
     return res.json({ user });
   });
+}
+
+export function getAccessToken(req, res) {
+  console.log(req.session);
+  if (req.session.accessToken) {
+    return res.json({ accessToken: req.session.accessToken });
+  }
+  return null;
 }

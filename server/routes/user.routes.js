@@ -11,4 +11,6 @@ router.route('/')
 router.route('/:id')
   .get(UserController.read);
 
+router.route('/token').get(UserController.getAccessToken);
+
 export default router;

@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import session from 'express-session';
 import users from './routes/user.routes';
 
 const app = express();
@@ -14,6 +16,10 @@ mongoose.connect('mongodb://localhost/cairndb', (err, connection) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({secret: 'ssshhhhh'}));
+
+// setup the logger
+app.use(morgan('combined'))
 
 
 app.use('/api/users', users);
@@ -21,7 +27,7 @@ app.use('/api/users', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

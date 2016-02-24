@@ -68,10 +68,33 @@ function saveUserToStore(user) {
   }
 }
 
-export function saveUser() {
 
-  return dispatch => {
+function shouldSaveUser(state) {
+  const token = fetchAccessToken(); 
+  if (!token) {
+    return true;
+  }
+  return false;
+}
 
-    return dispatch(requestAccessToken());
+function fetchAccessToken() {
+  return fetch('http://localhost:3000/api/users/token')
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      console.log(json);
+      return json.accessToken;
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+export function saveUserIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldSaveUser(getState)) {
+      return dispatch(requestAccessToken());
+    }
   }
 }

@@ -1,6 +1,5 @@
 export default function user(state={
-  accessToken: null,
-  id: null,
+  fbID: null,
   name: '',
   picture: ''
   }, action) {
@@ -9,8 +8,7 @@ export default function user(state={
       case 'SAVE_USER':
         return {
           ...state,
-          id: action.user.id,
-          accessToken: action.user.accessToken,
+          fbID: action.user.id,
           name: action.user.name,
           picture: action.user.picture
         };

@@ -3,12 +3,14 @@ import React, {
   Component,
   Text,
   StyleSheet,
+  AsyncStorage,
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 
 const styles = StyleSheet.create(require('./styles.js'));
 
+import Loader from './components/Loader';
 import LoginContainer from './containers/LoginContainer';
 import UserProfileContainer from './containers/UserProfileContainer';
 
@@ -50,6 +52,30 @@ export default class App extends Component {
   constructor() {
     super();
     this.renderScene = this.renderScene.bind(this);
+    this.loadInitialState = this.loadInitialState.bind(this);
+    this.state = {
+      initialRoute: ''
+    }
+  }
+
+  componentDidMount() {
+
+    this.loadInitialState().done();
+  }
+
+  async loadInitialState() {
+
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (!token) {
+        this.setState({ initialRoute: 'login' });
+      } else {
+        this.setState({ initialRoute: 'userProfile' });
+      }
+    } catch (error) {
+      console.log(`error loading initial state: ${error}`);
+    }
+
   }
 
   renderScene(route, navigator) {
@@ -60,28 +86,34 @@ export default class App extends Component {
         return <UserProfileContainer navigator={navigator} />;
       default:
         return <UserProfileContainer navigator={navigator} />;
-
     }
   }
   render() {
 
-    return (
-      <Navigator
-        initialRoute={{ id: 'login' }}
-        renderScene={this.renderScene}
-        navigationBar={
-          <Navigator.NavigationBar
-            style={styles.navBar}
-            routeMapper={NavigationBarRouteMapper}
-          />
-        }
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
+    if (!this.state.initialRoute) {
+
+      return <Loader />
+
+    } else {
+      
+      return (
+        <Navigator
+          initialRoute={{ id: this.state.initialRoute }}
+          renderScene={this.renderScene}
+          navigationBar={
+            <Navigator.NavigationBar
+              style={styles.navBar}
+              routeMapper={NavigationBarRouteMapper}
+            />
           }
-          return Navigator.SceneConfigs.FloatFromRight;
-        }}
-      />
-    );
+          configureScene={(route) => {
+            if (route.sceneConfig) {
+              return route.sceneConfig;
+            }
+            return Navigator.SceneConfigs.FloatFromRight;
+          }}
+        />
+      );
+    }
   }
 }

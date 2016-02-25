@@ -12,25 +12,30 @@ export function all(req, res) {
 
 export function create(req, res) {
 
-  req.session.accessToken = req.accessToken;
+  if (!req.session.accessToken) {
+
+    req.session.accessToken = req.body.accessToken;
+  }
+  req.session.visit += 1;
+  req.session.save()
 
   const user = new User();
-  user.name = req.name;
-  user.fbID = req.fbID;
-  user.picture = req.picture;
+  user.name = req.body.name;
+  user.fbID = req.body.fbID;
+  user.picture = req.body.picture;
 
   user.save((err, user) => {
     if (err) {
-      return res.status(500).send(err);
+      console.log(err);
+      return res.status(500).json(err);
     }
-    console.log(user);
-    return res.json({ user });
+    return res.json({ user, session: req.session });
   });
 }
 
 export function read(req, res) {
 
-  Post.findOne({ _id: req.param.id }).exec((err, user) => {
+  User.findOne({ _id: req.param.id }).exec((err, user) => {
     if (err) {
       return res.status(500).send(err);
     } 
@@ -41,8 +46,9 @@ export function read(req, res) {
 
 export function getAccessToken(req, res) {
   console.log(req.session);
-  if (req.session.accessToken) {
-    return res.json({ accessToken: req.session.accessToken });
-  }
-  return null;
+  res.send(req.session);
+  // if (req.session.accessToken) {
+  //   return res.json({ accessToken: req.session.accessToken });
+  // }
+  // return res.json({ accessToken: null });
 }

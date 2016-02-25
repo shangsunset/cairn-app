@@ -3,16 +3,39 @@ import {
    FBSDKGraphRequest
 } from 'react-native-fbsdkcore';
 
+import { AsyncStorage } from 'react-native';
+
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
 
 function requestAccessToken() {
 
   return dispatch => {
 
     FBSDKAccessToken.getCurrentAccessToken(response => {
+      // saveAccessToken(response.tokenString);
       return dispatch(requestUserProfile(response.tokenString));
     });
   }
 }
+
+
+async function saveAccessToken(token) {
+  try {
+    await AsyncStorage.setItem('accessToken', token);
+  } catch (error) {
+
+    console.log(`error saveing access token: ${error}`);
+  }
+}
+
 
 function requestUserProfile(token) {
   
@@ -22,9 +45,9 @@ function requestUserProfile(token) {
       if (error) {
         console.log('Error making request.');
       } else {
-        user['accessToken'] = token;
         user['picture'] = user.picture.data.url;
         dispatch(saveUserToStore(user));
+        user['accessToken'] = token;
         postUserToServer(user);
 
       }
@@ -43,6 +66,7 @@ function postUserToServer(user) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body: JSON.stringify({
       fbID: user.id,
       accessToken: user.accessToken,
@@ -68,33 +92,27 @@ function saveUserToStore(user) {
   }
 }
 
+export function fetchAccessToken() {
+  return dispatch => {
 
-function shouldSaveUser(state) {
-  const token = fetchAccessToken(); 
-  if (!token) {
-    return true;
-  }
-  return false;
-}
-
-function fetchAccessToken() {
-  return fetch('http://localhost:3000/api/users/token')
+    fetch('http://localhost:3000/api/users/token', {
+      credentials: 'include' 
+    })
+    .then(checkStatus)
     .then(response => {
       return response.json();
     })
     .then(json => {
       console.log(json);
-      return json.accessToken;
     })
     .catch(err => {
       console.error(err);
     });
+  }
 }
 
 export function saveUserIfNeeded() {
   return (dispatch, getState) => {
-    if (shouldSaveUser(getState)) {
-      return dispatch(requestAccessToken());
-    }
+    return dispatch(requestAccessToken());
   }
 }

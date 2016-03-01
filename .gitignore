@@ -44,6 +44,8 @@ ios/build
 node_modules
 *.log
 .nvm
+env.js
+.env
 
 # OS X
 .DS_Store

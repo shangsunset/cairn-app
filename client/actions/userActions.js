@@ -61,12 +61,11 @@ function requestUserProfile(token) {
 function postUserToServer(user) {
   
   fetch('http://localhost:3000/api/users', {
-    method: 'post',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    credentials: 'include',
+    method: 'post',
     body: JSON.stringify({
       fbID: user.id,
       accessToken: user.accessToken,
@@ -76,11 +75,9 @@ function postUserToServer(user) {
   })
   .then(res => res.json())
   .then(json => {
-    console.log('here is result');
     console.log(json);
   })
   .catch(error => {
-    console.log('here is an error');
     console.log(error);
   });
 }
@@ -95,9 +92,7 @@ function saveUserToStore(user) {
 export function fetchAccessToken() {
   return dispatch => {
 
-    fetch('http://localhost:3000/api/users/token', {
-      credentials: 'include' 
-    })
+    fetch('http://localhost:3000/api/users/token')
     .then(checkStatus)
     .then(response => {
       return response.json();

@@ -8,7 +8,6 @@ router.route('/')
   .get(UserController.all)
   .post(UserController.create);
 
-
 router.route('/:fbID/authenticate')
   .get(UserController.authenticate);
 

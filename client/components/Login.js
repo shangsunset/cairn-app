@@ -40,7 +40,7 @@ class Login extends Component {
                 alert('Login cancelled.');
               } else {
 
-                this.props.actions.saveUserIfNeeded();
+                this.props.actions.handleFBLoggedInUser();
                 this.props.navigator.push({ id: 'userProfile', title: 'My Profile'});
               }
             }

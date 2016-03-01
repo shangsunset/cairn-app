@@ -2,13 +2,14 @@ import React, { Component } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import * as UserActions from '../actions/userActions';
+import * as AuthActions from '../actions/authActions';
 
 import UserProfile from '../components/UserProfile';
 
 class UserProfileContainer extends Component {
 
   render() {
+    console.log(this.props);
 
     return (
       <UserProfile {...this.props} />
@@ -19,13 +20,13 @@ class UserProfileContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    auth: state.auth,
   } 
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(AuthActions, dispatch)
   }
 }
 

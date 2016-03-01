@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 
 import env from './env';
-import users from './routes/user.routes';
+import users from './routes/userRoutes';
 
 const app = express();
 
@@ -28,10 +28,9 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  console.log(req.headers);
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set('Access-Control-Allow-Credentials', true)
-  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 

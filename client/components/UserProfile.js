@@ -10,10 +10,6 @@ export default class UserProfile extends Component {
     super(props);
   }
 
-  componentDidMount() {
-
-    this.props.actions.fetchAccessToken();
-  }
 
   render() {
     const { user } = this.props

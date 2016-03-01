@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import * as UserController from '../controllers/user.controller';
+import * as UserController from '../controllers/userController';
 
 /* GET users listing. */
 router.route('/')
@@ -9,8 +9,8 @@ router.route('/')
   .post(UserController.create);
 
 
-router.route('/:id')
-  .get(UserController.read);
+router.route('/:fbID/authenticate')
+  .get(UserController.authenticate);
 
 
 export default router;

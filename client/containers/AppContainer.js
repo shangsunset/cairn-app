@@ -8,11 +8,15 @@ import React, {
   TouchableHighlight,
 } from 'react-native';
 
-const styles = StyleSheet.create(require('./styles.js'));
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import Loader from './components/Loader';
-import LoginContainer from './containers/LoginContainer';
-import UserProfileContainer from './containers/UserProfileContainer';
+const styles = StyleSheet.create(require('../styles.js'));
+
+import * as AuthActions from '../actions/authActions';
+import Loader from '../components/Loader';
+import LoginContainer from './LoginContainer';
+import UserProfileContainer from './UserProfileContainer';
 
 
 let NavigationBarRouteMapper = {
@@ -48,29 +52,29 @@ let NavigationBarRouteMapper = {
 }
 
 
-export default class App extends Component {
+class App extends Component {
   constructor() {
     super();
+    this.state = {
+      initialRoute: null
+    }
     this.renderScene = this.renderScene.bind(this);
     this.loadInitialState = this.loadInitialState.bind(this);
-    this.state = {
-      initialRoute: ''
-    }
   }
 
   componentDidMount() {
 
     this.loadInitialState().done();
+
   }
 
   async loadInitialState() {
 
     try {
-      const token = await AsyncStorage.getItem('accessToken');
-      if (!token) {
-        this.setState({ initialRoute: 'login' });
-      } else {
-        this.setState({ initialRoute: 'userProfile' });
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+
+        this.props.actions.loginSuccess(token);
       }
     } catch (error) {
       console.log(`error loading initial state: ${error}`);
@@ -90,12 +94,11 @@ export default class App extends Component {
   }
   render() {
 
+    console.log(this.state.initialRoute);
     if (!this.state.initialRoute) {
-
       return <Loader />
-
     } else {
-      
+
       return (
         <Navigator
           initialRoute={{ id: this.state.initialRoute }}
@@ -115,5 +118,24 @@ export default class App extends Component {
         />
       );
     }
+      
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

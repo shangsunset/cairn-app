@@ -5,7 +5,7 @@ const ObjectId = Schema.ObjectId;
 const userSchema = new Schema({
   fbID: {
     type: String,
-    unique: true,
+    unique: true
   },
   name: {
     type: String,

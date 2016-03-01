@@ -2,13 +2,14 @@ import React, { Component } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import * as UserActions from '../actions/userActions';
+import * as AuthActions from '../actions/authActions';
 
 import Login from '../components/Login';
 
 class LoginContainer extends Component {
 
   render() {
+    console.log(this.props.navigator.getCurrentRoutes());
     return (
 
       <Login {...this.props} />
@@ -18,13 +19,13 @@ class LoginContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    auth: state.auth
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(AuthActions, dispatch)
   }
 }
 

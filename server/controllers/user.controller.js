@@ -12,12 +12,6 @@ export function all(req, res) {
 
 export function create(req, res) {
 
-  if (!req.session.accessToken) {
-
-    req.session.accessToken = req.body.accessToken;
-  }
-  req.session.visit += 1;
-  req.session.save()
 
   const user = new User();
   user.name = req.body.name;
@@ -42,13 +36,4 @@ export function read(req, res) {
 
     return res.json({ user });
   });
-}
-
-export function getAccessToken(req, res) {
-  console.log(req.session);
-  res.send(req.session);
-  // if (req.session.accessToken) {
-  //   return res.json({ accessToken: req.session.accessToken });
-  // }
-  // return res.json({ accessToken: null });
 }

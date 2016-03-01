@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import session from 'express-session';
-import cors from 'cors';
 
+import env from './env';
 import users from './routes/user.routes';
 
 const app = express();
@@ -19,14 +19,24 @@ mongoose.connect('mongodb://localhost/cairndb', (err, connection) => {
 // setup the logger
 app.use(morgan('dev'))
 
-app.use(cors({credentials: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({secret: 'ssshhhhh', resave: true, saveUninitialized: true}));
+app.use(session({
+  secret: 'ssshhhhh',
+  resave: true,
+  saveUninitialized: true,
+}));
 
+app.use(function(req, res, next) {
+  console.log(req.headers);
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set('Access-Control-Allow-Credentials', true)
+  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // routes
-app.use('/api/users', users);
+app.use('/users', users);
 
 
 // catch 404 and forward to error handler

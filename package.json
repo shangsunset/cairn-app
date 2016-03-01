@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "server": "NODE_ENV=development PORT=3000 nodemon index.server.js",
+    "server": "nodemon index.server.js",
     "test": "PORT=3001 mocha --compilers js:babel-core/register server/tests"
   },
   "dependencies": {

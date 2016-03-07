@@ -46,7 +46,7 @@ class Login extends Component {
             }
           }}
           onLogoutFinished={() => {
-            alert('you logged out');
+            this.props.actions.logoutUser();
           }}
           readPermissions={['public_profile']}
           publishPermissions={[]}

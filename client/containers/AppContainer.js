@@ -75,6 +75,8 @@ class App extends Component {
       if (token) {
 
         this.props.actions.loginSuccess(token);
+      } else {
+        this.props.actions.loginFailure();
       }
     } catch (error) {
       console.log(`error loading initial state: ${error}`);
@@ -94,14 +96,14 @@ class App extends Component {
   }
   render() {
 
-    console.log(this.state.initialRoute);
-    if (!this.state.initialRoute) {
+    const { isAuthenticated } = this.props.auth;
+    if (typeof isAuthenticated === 'undefined') {
       return <Loader />
     } else {
 
       return (
         <Navigator
-          initialRoute={{ id: this.state.initialRoute }}
+          initialRoute={{ id: isAuthenticated ? 'userProfile' : 'login' }}
           renderScene={this.renderScene}
           navigationBar={
             <Navigator.NavigationBar

@@ -1,5 +1,6 @@
 import { FBSDKGraphRequest } from 'react-native-fbsdkcore';
 import { AsyncStorage } from 'react-native';
+import jwtDecode from 'jwt-decode';
 
 function saveUserToStore(user, token) {
   AsyncStorage.setItem('token', token);
@@ -10,15 +11,24 @@ function saveUserToStore(user, token) {
   }
 }
 
-export function loginSuccess(token) {
-
+export function logoutUser() {
+  AsyncStorage.removeItem('token');
   return {
-    type: 'LOGIN_SUCCESS',
-    token
+    type: 'LOGOUT_USER',
   }
 }
 
-function loginFailure() {
+export function loginSuccess(token) {
+
+  const decoded = jwtDecode(token);
+  return {
+    type: 'LOGIN_SUCCESS',
+    token,
+    user: decoded._doc
+  }
+}
+
+export function loginFailure() {
   return {
     type: 'LOGIN_FAILURE'
   }

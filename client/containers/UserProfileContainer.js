@@ -20,7 +20,7 @@ class UserProfileContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
+    user: state.auth.user,
   } 
 }
 

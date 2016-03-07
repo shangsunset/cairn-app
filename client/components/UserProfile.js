@@ -5,6 +5,8 @@ import React, {
   Image
 } from 'react-native';
 
+import Loader from './Loader';
+
 export default class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +17,7 @@ export default class UserProfile extends Component {
     const { user } = this.props
     if (!user) {
 
-      return (
-        <View style={{ marginTop: 70 }}>
-          <Text>Error loading profile</Text>
-        </View>
-      );
+      return <Loader />;
     } else {
       return (
         <View style={{ marginTop: 70 }}>

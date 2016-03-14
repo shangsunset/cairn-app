@@ -9,7 +9,6 @@ import UserProfile from '../components/UserProfile';
 class UserProfileContainer extends Component {
 
   render() {
-    console.log(this.props);
 
     return (
       <UserProfile {...this.props} />

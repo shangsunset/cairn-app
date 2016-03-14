@@ -11,7 +11,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  picture: String
+  picture: String,
+  messages: [{type: ObjectId, ref: 'Message'}]
 });
 
 

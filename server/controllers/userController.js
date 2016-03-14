@@ -13,7 +13,6 @@ export function all(req, res) {
 
 export function create(req, res) {
 
-
   const user = new User();
   user.name = req.body.name;
   user.fbID = req.body.fbID;

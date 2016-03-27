@@ -22,7 +22,7 @@ export function create(req, res) {
     if (err) {
       return res.status(500).json(err);
     }
-    const token = jwt.sign(user, process.env.JWT_SECRET, {
+    const token = jwt.sign(user, process.env.SECRET, {
       expiresIn: 1440 // expires in n seconds
     });
 

@@ -5,7 +5,9 @@ import morgan from 'morgan';
 import session from 'express-session';
 
 import env from './env';
+
 import users from './routes/userRoutes';
+import messages from './routes/messageRoutes';
 
 const app = express();
 
@@ -36,6 +38,7 @@ app.use(function(req, res, next) {
 
 // routes
 app.use('/users', users);
+app.use('/messages', messages);
 
 
 // catch 404 and forward to error handler
